@@ -13,6 +13,10 @@ resized_image = cv2.resize(image, (new_width, new_height))
 # 그레이스케일로 변환
 gray = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
 
+# CLAHE 적용
+clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+clahe_image = clahe.apply(gray)
+
 # 이미지 히스토그램 평활화
 equ = cv2.equalizeHist(gray)
 
@@ -27,10 +31,8 @@ edges = cv2.Canny(binary, 30, 70)
 
 # 결과 이미지 출력
 cv2.imshow('Resized Image', resized_image)
-cv2.imshow('Gray Image', gray)
-cv2.imshow('Histogram Equalized Image', equ)
-cv2.imshow('Blurred Image', blurred)
-cv2.imshow('Binary Image', binary)
-cv2.imshow('Edges Image', edges)
+cv2.imshow('CLAHE Image', clahe_image)
+
 
 cv2.waitKey(0)
+cv2.destroyAllWindows()
